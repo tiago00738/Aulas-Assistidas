@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Aulas Assistidas</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">    
+</head>
+
+<body onload="Aulas_Assistidas()">
+    <h1>Aulas Assistidas</h1>
+
+    <div class="container">
+        <div class="row">
+            <div id="msg" class="col-sm-10 offset-sm-1 ">
+                <!--<div class="alert alert-warning">Professor/Curso não encontrado.</div>-->
+            </div>
+        </div>
+
+         
+        
+        <form id="form-Aulas_Assistidas">            
+            <div class="form-group row">
+                <div class="col-sm-4">
+                    <select name="filtro_professor" id="filtro_professor" onchange="Aulas_Assistidas()" class="form-control">
+                        <option value="">Selecione o Professor</option>
+                        <option value="Felipe">Felipe</option>
+                        <option value="Carlos">Carlos</option>
+                        <option value="Jõao Bosco">Jõao Bosco</option>
+                        <option value="Rommel">Rommel</option>
+                        <option value="Fátima">Fátima</option>
+						<option value="Cláudio">Cláudio</option>
+						<option value="Roberto">Roberto</option>
+						<option value="Larissa">Larissa</option>
+						<option value="Luis">Luis</option>
+						<option value="Nicolas">Nicolas</option>
+                    </select>                    
+                </div>
+                <div class="col-sm-8">
+                    <select name="filtro_curso" id="filtro_curso" onchange="Aulas_Assistidas()"  class="form-control">
+                        <option value="">Selecione o Curso</option>
+                        <option value="Aeds">Aeds</option>
+                        <option value="IC">IC</option>
+                        <option value="Tiaw">Tiaw</option>
+						<option value="Cálculo">Cálculo</option>
+						<option value="Banco de Dados">Banco de Dados</option>
+						<option value="Banco de Dados II">Banco de Dados II</option>
+						<option value="DevWeb">DevWeb</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+
+
+        <div class="row">
+            <div class="col-sm-12">
+                <table id="grid-Aulas_Assistidas" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Número Da Aula</th>
+                            <th scope="col">Professor</th>
+                            <th scope="col">Curso</th>
+                            <th scope="col">Views</th>
+                            <th scope="col">Email Do Professor</th>
+                            <th scope="col">Horario de Aula</th>
+                            <th scope="col">Link da Aula</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-Aulas_Assistidas">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="app.js"></script>
+    <script>
+        // função para listar na tabela os Aulas_Assistidas que estão associados aos filtros 
+        function Aulas_Assistidas() {
+            
+            // Obtem os dados informados pelo usuário nos filtros
+            let fp = document.getElementById('filtro_professor').value;
+            let fc = document.getElementById('filtro_curso').value;
+
+            // limpa a lista de Aulas_Assistidas apresentados
+            $("#table-Aulas_Assistidas").empty();
+
+            // Popula a tabela com os registros do banco de dados
+            for (let index = 0; index < db.data.length; index++) {
+                const Aulas_Assistidas = db.data[index];
+
+                // Verifica se os dados do Aulas_Assistidas batem com os filtros
+                if (((Aulas_Assistidas.Professor == fp) || (fp == '')) &&
+                    ((Aulas_Assistidas.Curso == fc) || (fc == ''))) {
+                    
+                    // Inclui o Aulas_Assistidas na tabela    
+                    $("#table-Aulas_Assistidas").append(`<tr><td scope="row">${Aulas_Assistidas.número}</td>
+                                                    <td>${Aulas_Assistidas.Professor}</td>
+                                                    <td>${Aulas_Assistidas.Curso}</td>
+                                                    <td>${Aulas_Assistidas.Views}</td>
+                                                    <td>${Aulas_Assistidas.Email}</td>
+                                                    <td>${Aulas_Assistidas.Horario_Aula}</td>
+                                                    <td>${Aulas_Assistidas.Link_da_Aula}</td>
+                                                </tr>`);
+                }
+            }
+
+        }
+    </script>
+
+</body>
+
+</html>
